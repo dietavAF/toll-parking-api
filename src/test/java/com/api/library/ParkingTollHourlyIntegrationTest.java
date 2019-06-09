@@ -2,7 +2,6 @@ package com.api.library;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.api.library.entity.SedanCar;
+import com.api.library.entity.CarType;
 import com.api.library.response.Invoice;
 import com.api.library.response.ParkResponse;
 import com.api.library.response.ParkingStatus;
@@ -58,7 +57,7 @@ public class ParkingTollHourlyIntegrationTest {
 		ParkResponse responseJson = objectMapper.readValue(response.getContentAsString(), ParkResponse.class);
 
 		assertNotNull(responseJson.getCar());
-		assertTrue(responseJson.getCar() instanceof SedanCar);
+		assertTrue(responseJson.getCar().getType().equals(CarType.SEDAN));
 		assertEquals(responseJson.getMessage(), "The car has been parked");
 
 	}
@@ -73,7 +72,7 @@ public class ParkingTollHourlyIntegrationTest {
 		Invoice responseJson = objectMapper.readValue(response.getContentAsString(), Invoice.class);
 
 		assertNotNull(responseJson.getCar());
-		assertTrue(responseJson.getCar() instanceof SedanCar);
+		assertTrue(responseJson.getCar().getType().equals(CarType.SEDAN));
 		assertTrue(responseJson.getHoursSpentInParking() == 1);
 		assertTrue(responseJson.getBill() == 2);
 

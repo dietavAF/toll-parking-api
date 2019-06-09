@@ -17,7 +17,6 @@ public class Electric50ParkingSlot extends ParkingSlot {
 	public Car createCarToPark(String plate, CarType type) {
 		Car carToPark = new Electric50kwCar();
 		carToPark.setPlate(plate);
-		carToPark.setType(type);
 		return carToPark;
 	}
 

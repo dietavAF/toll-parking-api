@@ -17,7 +17,6 @@ public class SedanParkingSlot extends ParkingSlot {
 	public Car createCarToPark(String plate, CarType type) {
 		Car carToPark = new SedanCar();
 		carToPark.setPlate(plate);
-		carToPark.setType(type);
 		return carToPark;
 	}
 	

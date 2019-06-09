@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +21,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.api.library.controller.ParkingController;
 import com.api.library.entity.Car;
@@ -29,6 +30,7 @@ import com.api.library.entity.CarType;
 import com.api.library.entity.Electric20kwCar;
 import com.api.library.entity.SedanCar;
 import com.api.library.entity.Slot;
+import com.api.library.exception.ApiError;
 import com.api.library.response.Invoice;
 import com.api.library.response.ParkResponse;
 import com.api.library.response.ParkingStatus;
@@ -49,10 +51,13 @@ public class ParkingTollApplicationJUnitTest {
     
     @MockBean
     private ParkingManagementService parkingService;
+    
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @Before
     public void setup() throws Exception {
-        this.mockMvc = standaloneSetup(this.parkingController).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 	
 	@Test
@@ -81,7 +86,6 @@ public class ParkingTollApplicationJUnitTest {
 	@Test
 	public void testParkSedanCar() throws Exception {
 		Car sedan = new SedanCar();
-		sedan.setType(CarType.SEDAN);
 		sedan.setPlate("AR511RR");
 		ParkResponse response = new ParkResponse();
 		response.setCar(sedan);
@@ -129,7 +133,6 @@ public class ParkingTollApplicationJUnitTest {
 	public void testFreeSlot() throws Exception { 
 		
 		Car elec20 = new Electric20kwCar();
-		elec20.setType(CarType.ELECTRIC_20);
 		elec20.setPlate("AR511RR");
 		
 		Invoice invoice = new Invoice();
@@ -150,6 +153,19 @@ public class ParkingTollApplicationJUnitTest {
         assertTrue(responseJson.getBill() == 2);
         assertTrue(responseJson.getHoursSpentInParking() == 1);
         assertTrue(responseJson.getCar().getType().equals(CarType.ELECTRIC_20));
+	}
+	
+	@Test
+	public void testParkingSedanCar_WrongTypeCar() throws Exception {
+		
+		MockHttpServletResponse response = mockMvc
+				.perform(post("/parking-toll/api/v1/car/{plate}/free?type=AAA", "AR511RR"))
+				.andExpect(status().isBadRequest()).andReturn().getResponse();
+	
+		ApiError error = objectMapper.readValue(response.getContentAsString(), ApiError.class);
+
+		assertNotNull(error);
+		assertEquals(error.getMessage(), "The car type 'AAA' is not allowed");
 	}
 	
 }

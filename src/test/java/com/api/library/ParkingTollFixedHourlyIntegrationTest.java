@@ -22,8 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.api.library.entity.Electric20kwCar;
-import com.api.library.entity.SedanCar;
+import com.api.library.entity.CarType;
 import com.api.library.exception.ApiError;
 import com.api.library.response.Invoice;
 import com.api.library.response.ParkResponse;
@@ -59,7 +58,7 @@ public class ParkingTollFixedHourlyIntegrationTest {
 		ParkResponse responseJson = objectMapper.readValue(response.getContentAsString(), ParkResponse.class);
 
 		assertNotNull(responseJson.getCar());
-		assertTrue(responseJson.getCar() instanceof SedanCar);
+		assertTrue((responseJson.getCar().getType().equals(CarType.SEDAN)));
 		assertEquals(responseJson.getMessage(), "The car has been parked");
 
 	}
@@ -74,7 +73,7 @@ public class ParkingTollFixedHourlyIntegrationTest {
 		Invoice responseJson = objectMapper.readValue(response.getContentAsString(), Invoice.class);
 
 		assertNotNull(responseJson.getCar());
-		assertTrue(responseJson.getCar() instanceof SedanCar);
+		assertTrue(responseJson.getCar().getType().equals(CarType.SEDAN));
 		assertTrue(responseJson.getHoursSpentInParking() == 1);
 		assertTrue(responseJson.getBill() == 6);
 
@@ -224,7 +223,7 @@ public class ParkingTollFixedHourlyIntegrationTest {
 		ParkResponse responseJson = objectMapper.readValue(response.getContentAsString(), ParkResponse.class);
 
 		assertNotNull(responseJson.getCar());
-		assertTrue(responseJson.getCar() instanceof Electric20kwCar);
+		assertTrue(responseJson.getCar().getType().equals(CarType.ELECTRIC_20));
 		assertEquals(responseJson.getMessage(), "The car has been parked");
 
 	}

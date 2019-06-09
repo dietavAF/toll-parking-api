@@ -15,13 +15,7 @@ public abstract class Car {
 	
 	protected CarType type;
 
-	public CarType getType() {
-		return type;
-	}
-
-	public void setType(CarType type) {
-		this.type = type;
-	}
+	public abstract CarType getType();
 
 	public String getPlate() {
 		return plate;

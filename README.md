@@ -21,7 +21,7 @@ To implement this API:
 
 ## How to Run
 
-This application is packaged as a jar which has a Tomcat 8 server embedded. No Tomcat or JBoss installation is necessary.
+This application is packaged as a jar which has a Tomcat 9 (v9.0.17) server embedded. No Tomcat or JBoss installation is necessary.
 First, you have to clone the repository.
 Then, you can build the project, run the tests and run the application with: 
 
