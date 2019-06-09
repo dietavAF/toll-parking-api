@@ -11,9 +11,6 @@ import com.api.library.utils.ParkingTollConstants;
 public class Electric20ParkingSlot extends ParkingSlot {
 	 
 	@Value("${electric20.parking.slots}")
-	private Integer availableElec20Slots;
-	
-	@Value("${electric20.parking.slots}")
 	private int maxElec20Slots;
 	
 	@Override
@@ -35,12 +32,7 @@ public class Electric20ParkingSlot extends ParkingSlot {
 
 	@Override
 	public Integer getAvailableSlots() {
-		return availableElec20Slots;
-	}
-
-	@Override
-	public void changeAvailableSlots(int i) {
-		availableElec20Slots += i;
+		return maxElec20Slots - parkSlotMap.size();
 	}
 
 }

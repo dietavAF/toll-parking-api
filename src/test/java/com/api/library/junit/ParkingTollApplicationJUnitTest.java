@@ -29,7 +29,6 @@ import com.api.library.entity.CarType;
 import com.api.library.entity.Electric20kwCar;
 import com.api.library.entity.SedanCar;
 import com.api.library.entity.Slot;
-import com.api.library.exception.ApiError;
 import com.api.library.response.Invoice;
 import com.api.library.response.ParkResponse;
 import com.api.library.response.ParkingStatus;
@@ -153,16 +152,4 @@ public class ParkingTollApplicationJUnitTest {
         assertTrue(responseJson.getCar().getType().equals(CarType.ELECTRIC_20));
 	}
 	
-//	@Test
-//	public void testParkSedanCar_WrongCarType() throws Exception {
-//		MockHttpServletResponse response = mockMvc
-//				.perform(post("/parking-toll/api/v1/car/{plate}/free?type=AAA", "AR511RR"))
-//				.andExpect(status().isBadRequest()).andReturn().getResponse();
-//
-//		ApiError error = objectMapper.readValue(response.getContentAsString(), ApiError.class);
-//
-//		assertNotNull(error);
-//		assertEquals(error.getMessage(), "The car type 'AAA' is not allowed");
-//		
-//	}
 }

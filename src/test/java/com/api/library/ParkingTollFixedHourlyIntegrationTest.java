@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.api.library.entity.Electric20kwCar;
 import com.api.library.entity.SedanCar;
 import com.api.library.exception.ApiError;
 import com.api.library.response.Invoice;
@@ -211,6 +212,33 @@ public class ParkingTollFixedHourlyIntegrationTest {
 		
 		assertNotNull(error);
 		assertEquals(error.getMessage(), "The car type 'AAA' is not allowed");
+	}
+	
+	@Test
+	public void test10_testParkElectricCar_parkOneElectricCar() throws Exception {
+		MockHttpServletResponse response = mockMvc
+				.perform(post("/parking-toll/api/v1/car/{plate}/park?type=ELECTRIC_20", "HY987YY"))
+				.andExpect(status().isCreated()).andReturn().getResponse();
+		assertThat(response.getContentAsString()).isNotEmpty();
+
+		ParkResponse responseJson = objectMapper.readValue(response.getContentAsString(), ParkResponse.class);
+
+		assertNotNull(responseJson.getCar());
+		assertTrue(responseJson.getCar() instanceof Electric20kwCar);
+		assertEquals(responseJson.getMessage(), "The car has been parked");
+
+	}
+	
+	@Test
+	public void test11_testGetParkingStatus_WithElectricCar() throws Exception {
+		MockHttpServletResponse response = mockMvc.perform(get("/parking-toll/api/v1/car?type=ELECTRIC_20"))
+				.andExpect(status().isOk()).andReturn().getResponse();
+		assertThat(response.getContentAsString()).isNotEmpty();
+
+		ParkingStatus status = objectMapper.readValue(response.getContentAsString(), ParkingStatus.class);
+		assertTrue(status.getAvailableSlots() == 9);
+		assertTrue(status.getOccupiedSlots() == 1);
+		assertEquals(status.getName(), "Parking for 20kw Electric Cars");
 	}
 
 }

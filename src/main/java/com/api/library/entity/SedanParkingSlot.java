@@ -11,9 +11,6 @@ import com.api.library.utils.ParkingTollConstants;
 public class SedanParkingSlot extends ParkingSlot {
 	
 	@Value("${sedan.parking.slots}")
-	private Integer availableSedanSlots;
-	
-	@Value("${sedan.parking.slots}")
 	private int maxSedanSlots;
 	
 	@Override
@@ -26,14 +23,9 @@ public class SedanParkingSlot extends ParkingSlot {
 	
 	@Override
 	public Integer getAvailableSlots() {
-		return availableSedanSlots;
+		return maxSedanSlots - parkSlotMap.size();
 	}
 	
-	@Override
-	public void changeAvailableSlots(int i) {
-		availableSedanSlots += i;
-	}
-
 	@Override
 	public int getMaxNumberOfSlots() {
 		return maxSedanSlots;

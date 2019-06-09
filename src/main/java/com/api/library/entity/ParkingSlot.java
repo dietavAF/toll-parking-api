@@ -10,7 +10,7 @@ import com.api.library.exception.NoCarToLeaveException;
 
 public abstract class ParkingSlot {
 
-	private Map<Car, Slot> map = new HashMap<Car, Slot>();
+	protected Map<Car, Slot> parkSlotMap = new HashMap<Car, Slot>();
 
 	public Integer freeTheSlot(Car carToLeave) throws NoCarToLeaveException {
 		Slot slot = manageSlot(carToLeave, ActionOnSlot.LEAVE);
@@ -23,7 +23,7 @@ public abstract class ParkingSlot {
 	
 	public void occupyTheSlot(Car carToPark) throws FullParkingException, CarAlreadyParkedException {
 		if (!isFull()) {
-			if (map.get(carToPark) != null) {
+			if (parkSlotMap.get(carToPark) != null) {
 				throw new CarAlreadyParkedException(carToPark, "The car with this plate is already in the Parking");
 			}
 			manageSlot(carToPark, ActionOnSlot.PARK);
@@ -39,39 +39,33 @@ public abstract class ParkingSlot {
 	public Slot manageSlot(Car car, ActionOnSlot action) {
 		Slot slot = null;
 		if (action.equals(ActionOnSlot.PARK)) {
-
 			slot = new Slot();
 			slot.setStartPark(new Date());
-			map.put(car, slot);
-			changeAvailableSlots(-1);;
-
+			parkSlotMap.put(car, slot);
 		} else {
-			slot = map.get(car);
+			slot = parkSlotMap.get(car);
 			if (slot != null) {
-				map.remove(car);
+				parkSlotMap.remove(car);
 				slot.setStopPark(new Date());
-				changeAvailableSlots(1);;
 			}
 		}
 		return slot;
 	}
 
-	public abstract Car createCarToPark(String plate, CarType type);
-
 	public Car getCarToLeave(String plate) {
-		for(Car car: map.keySet()) {
+		for(Car car: parkSlotMap.keySet()) {
 			if (car.getPlate().equals(plate)) {
 				return car;
 			}
 		}
 		return null;
 	}
+	
+	public abstract Car createCarToPark(String plate, CarType type);
 
 	public abstract int getMaxNumberOfSlots();
 	
 	public abstract String getName();
-	
-	public abstract void changeAvailableSlots(int i);
 	
 	public abstract Integer getAvailableSlots();
 
