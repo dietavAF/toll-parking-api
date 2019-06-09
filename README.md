@@ -40,9 +40,6 @@ or you can build the project, run the tests and run the application using Maven:
         mvn clean package -Dspring.profiles.active=fixedHourly spring-boot:run
 ```
 
-The ```spring.profiles.active``` parameter can assume two values: hourly and fixedHourly (check the paragraph "Description"). 
-They correspond to the Pricing Policies which can be adopted by the parking
-
 Once the application runs you should see something like this
 
 ```
@@ -51,6 +48,15 @@ Once the application runs you should see something like this
 ```
 
 The Tomcat started port is important, as defines the port used by the application (in this case 8080).
+
+## Properties
+
+The ```application.properties``` file defines some properties for the application:
+* ```spring.profiles.active```: this can assume two values (hourly and fixedHourly). They correspond to the Pricing Policies which can be adopted by the parking (default is hourly)
+* ```sedan.parking.slots```: the number of parking slots for Sedan Cars
+* ```electric20.parking.slots```: the number of parking slots for Electric Cars with 20kW power
+* ```electric50.parking.slots```: the number of parking slots for Electric Cars with 50kW power
+
 
 ## API Documentation
 
