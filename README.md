@@ -15,6 +15,10 @@ The parking has got a pricing policy:
 
 This API should manage coming cars to park them (at the first free slot) or refuse them if the right parking is full and should manage the invoice for the leaving cars.
 
+To implement this API:
+* Security has not been implemented (it could be an improvement)
+* Persistence has not been implemented because it has been choosen to implement this Library for ONE parking
+
 ## How to Run
 
 This application is packaged as a jar which has a Tomcat 8 server embedded. No Tomcat or JBoss installation is necessary.
