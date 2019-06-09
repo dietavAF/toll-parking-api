@@ -8,6 +8,13 @@ import com.api.library.entity.FixedAndHourlyPolicy;
 import com.api.library.entity.HourlyPolicy;
 import com.api.library.entity.PricingPolicy;
 
+/**
+ * The configuration bean which allows to select the pricing policy of the parking
+ * There will be one Pricing policy for the whole parking
+ * 
+ * @author diegotavolaro
+ *
+ */
 @Configuration
 public class PricingPolicyConfiguration {
 	

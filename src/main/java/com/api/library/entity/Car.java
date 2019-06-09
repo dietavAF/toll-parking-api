@@ -13,8 +13,6 @@ public abstract class Car {
 	
 	protected String plate;
 	
-	protected CarType type;
-
 	public abstract CarType getType();
 
 	public String getPlate() {
@@ -30,7 +28,6 @@ public abstract class Car {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((plate == null) ? 0 : plate.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -47,8 +44,6 @@ public abstract class Car {
 			if (other.plate != null)
 				return false;
 		} else if (!plate.equals(other.plate))
-			return false;
-		if (type != other.type)
 			return false;
 		return true;
 	}

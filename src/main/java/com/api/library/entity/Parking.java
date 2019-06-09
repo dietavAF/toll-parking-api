@@ -19,6 +19,12 @@ public class Parking {
 	@Autowired @Qualifier("elec50")
 	private Electric50ParkingSlot elec50ParkingSlot;
 	
+	/**
+	 * Allows to determine the Parking Slots for a specified car type
+	 * 
+	 * @param carType the type of the car to be parked
+	 * @return the Parking Slot related to the car to park
+	 */
 	public ParkingSlot determineParkingSlot(CarType carType) {
 		if (carType.equals(CarType.SEDAN)) {
 			return sedanParkingSlot;
@@ -32,6 +38,11 @@ public class Parking {
 		return null;
 	}
 	
+	/**
+	 * Get the pricing policy
+	 * 
+	 * @return the pricing policy of the parking
+	 */
 	public PricingPolicy getPricingPolicy() {
 		return pricingPolicy;
 	}
