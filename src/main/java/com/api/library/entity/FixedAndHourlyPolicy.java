@@ -1,13 +1,18 @@
 package com.api.library.entity;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class FixedAndHourlyPolicy implements PricingPolicy {
 	
-	private static final int HOURLY_PRICE = 1;
-	private static final int FIXED_AMOUNT = 5;
+	@Value("${fixedhourly.policy.fixed.amount}")
+	private int fixedAmount;
+	
+	@Value("${fixedhourly.policy.hourly.amount}")
+	private int hourlyPrice;
 	
 	@Override
 	public int getBill(int numberOfHours) {
-		return FIXED_AMOUNT + HOURLY_PRICE * numberOfHours;
+		return fixedAmount + hourlyPrice * numberOfHours;
 	}
 
 }
