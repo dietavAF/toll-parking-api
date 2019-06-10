@@ -53,6 +53,9 @@ The Tomcat started port is important, as defines the port used by the applicatio
 
 The ```application.properties``` file defines some properties for the application:
 * ```spring.profiles.active```: this can assume two values (hourly and fixedHourly). They correspond to the Pricing Policies which can be adopted by the parking (default is hourly)
+* ```hourly.policy.hourly.amount```: the hourly price for HOURLY policy
+* ```fixedhourly.policy.hourly.amount```: the hourly price for FIXED_HOURLY policy
+* ```fixedhourly.policy.fixed.amount```: the fixed price for FIXED_HOURLY policy
 * ```sedan.parking.slots```: the number of parking slots for Sedan Cars
 * ```electric20.parking.slots```: the number of parking slots for Electric Cars with 20kW power
 * ```electric50.parking.slots```: the number of parking slots for Electric Cars with 50kW power
